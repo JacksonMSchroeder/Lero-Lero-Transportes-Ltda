@@ -1,4 +1,5 @@
-import { getViagens, getConfigs, calcularResultadoViagem } from '../database/supabase.js';
+import { getViagens, getConfigs } from '../database/supabase.js';
+import { calcularResultadoViagem } from '../utils/app.js';
 
 // Importante: O caminho do import deve ser relativo à localização do arquivo atual (engine.js).
     // ./ : "Tô aqui" (mesma pasta).
@@ -8,10 +9,10 @@ import { getViagens, getConfigs, calcularResultadoViagem } from '../database/sup
     // Se tivesse a pasta src/core/modulo/engine.js:
     // import { ... } from '../../database/supabase.js';
 
-async function iniciarSprint2() {
+async function iniciar() {
     try {
-        const viagensRaw = await getViagens(true);
-        const config = await getConfigs(true);
+        const viagensRaw = await getViagens(); 
+        const config = await getConfigs();
 
         const resultadosFinais = viagensRaw.map(viagem => 
             calcularResultadoViagem(viagem, config)
@@ -25,8 +26,17 @@ async function iniciarSprint2() {
         })));
 
     } catch (error) {
-        console.error("Erro na execução da Sprint 2:", error);
+        console.error("Erro na execução :", error);
     }
 }
 
-iniciarSprint2();
+iniciar();
+
+
+
+
+
+
+
+
+

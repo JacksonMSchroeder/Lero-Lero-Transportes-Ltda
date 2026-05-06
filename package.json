@@ -1,0 +1,23 @@
+{
+  "name": "lerolero",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.1",
+    "vite": "^5.2.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JacksonMSchroeder/Lero-Lero-Transportes-Ltda.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JacksonMSchroeder/Lero-Lero-Transportes-Ltda/issues"
+  },
+  "homepage": "https://github.com/JacksonMSchroeder/Lero-Lero-Transportes-Ltda#readme"
+}
