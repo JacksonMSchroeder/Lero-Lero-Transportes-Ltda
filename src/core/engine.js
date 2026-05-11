@@ -1,5 +1,6 @@
-import { getViagens, getConfigs } from '../database/supabase.js';
-import { calcularResultadoViagem } from '../utils/app.js';
+import { tela } from './components/dom.js';
+import { getConfigs } from './database/supabase.js';
+import { calcularResultadoViagem } from './utils/app.js';
 
 // Importante: O caminho do import deve ser relativo à localização do arquivo atual (engine.js).
     // ./ : "Tô aqui" (mesma pasta).
@@ -9,34 +10,20 @@ import { calcularResultadoViagem } from '../utils/app.js';
     // Se tivesse a pasta src/core/modulo/engine.js:
     // import { ... } from '../../database/supabase.js';
 
-async function iniciar() {
+tela.form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
     try {
-        const viagensRaw = await getViagens(); 
-        const config = await getConfigs();
-
-        const resultadosFinais = viagensRaw.map(viagem => 
-            calcularResultadoViagem(viagem, config)
-        );
-
-        console.log("--- RELATÓRIO LERO-LERO TRANSPORTES ---");
-        console.table(resultadosFinais.map(r => ({
-            ID: r.viagem_id,
-            ...r.financeiro,
-            Lucro: r.indicadores.percentual_lucro
-        })));
-
-    } catch (error) {
-        console.error("Erro na execução :", error);
+        const [dados, conf] = await Promise.all([
+            tela.pegarDados(),
+            getConfigs()
+        ]);
+        
+        const resultado = calcularResultadoViagem(dados, conf);
+        tela.mostrar(resultado);
+        
+    } catch (err) {
+        console.error("Falha no processamento:", err);
+        alert("Erro ao calcular. Verifique a rede.");
     }
-}
-
-iniciar();
-
-
-
-
-
-
-
-
-
+});

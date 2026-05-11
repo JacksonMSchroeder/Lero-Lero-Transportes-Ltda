@@ -33,3 +33,9 @@ export const getConfigs = async () => {
     if (error) throw error;
     return data;
 };
+
+export const salvarViagem = async (dados) => {
+    const { data, error } = await supabase.from('viagens').insert([dados]);
+    if (error) throw error;
+    return data;
+};

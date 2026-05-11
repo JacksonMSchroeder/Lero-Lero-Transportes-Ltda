@@ -9,29 +9,29 @@ export const getComissao = (bruto, imposto, taxa) => (bruto - imposto) * taxa;
 
 export const calcularResultadoViagem = (viagem, config) => {
     const consumoReal = getConsumo(config.media_consumo_base, viagem.tipo_terreno);
-    const v_imposto = getImposto(viagem.valor_bruto, config.imposto_simples);
-    const v_diesel = getDiesel(viagem.km_total, consumoReal, config.preco_diesel);
-    const v_manutencao = getManutencao(viagem.km_total, config.manutencao_por_km);
-    const v_seguro = getSeguro(viagem.valor_mercadoria);
-    const v_comissao = getComissao(viagem.valor_bruto, v_imposto, config.comissao_motorista_percentual);
+    
+    const custos = {
+        imposto: getImposto(viagem.valor_bruto, config.imposto_simples),
+        diesel: getDiesel(viagem.km_total, consumoReal, config.preco_diesel),
+        manutencao: getManutencao(viagem.km_total, config.manutencao_por_km),
+        seguro: getSeguro(viagem.valor_mercadoria)
+    };
 
-    const custosTotais = v_imposto + v_diesel + v_manutencao + v_seguro + v_comissao;
-    const lucroLiquido = viagem.valor_bruto - custosTotais;
+    custos.comissao = getComissao(viagem.valor_bruto, custos.imposto, config.comissao_motorista_percentual);
+
+    const totalCustos = Object.values(custos).reduce((acc, val) => acc + val, 0);
+    const lucro = viagem.valor_bruto - totalCustos;
 
     return {
-        viagem_id: viagem.id,
+        id: viagem.id,
         financeiro: {
             faturamento: viagem.valor_bruto,
-            imposto: v_imposto,
-            combustivel: v_diesel,
-            manutencao: v_manutencao,
-            seguro_carga: v_seguro,
-            comissao_motorista: v_comissao,
-            margem_real: lucroLiquido.toFixed(2)
+            ...custos,
+            lucro_real: lucro
         },
         indicadores: {
-            consumo_km_l: consumoReal.toFixed(2),
-            percentual_lucro: ((lucroLiquido / viagem.valor_bruto) * 100).toFixed(2) + "%"
+            consumo_medio: consumoReal,
+            margem: (lucro / viagem.valor_bruto) * 100
         }
     };
 };

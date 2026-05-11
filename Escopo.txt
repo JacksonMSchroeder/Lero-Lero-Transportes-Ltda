@@ -280,3 +280,76 @@ lero-lero-transportes/
 │   └── app.js           # Lógica de login e roteamento (Admin vs Motorista)
 ├── index.html           # Ponto de entrada único
 └── README.md            # Documentação do seu "Módulo Especialista"
+
+
+
+
+cara, para colocar dificuldades depois no readME, e ter um diario de bordo de estudos, porque além de codar eu quero entender melhor minhas dificuldades
+e aprimorar, documentar e melhorar sempre, é um lugar para escrever reflexões tbm, sei lá, acho que poderia colocar isso no gitignore kk
+
+
+como um sistema de logistica realmente funciona, sabendo a pratica da minha profissão atual, cada transportadora
+tem seus destinos bem definidos, sabem o consumo medio de combustivel, numero de paradas, demora, é uma viagem de um ponto a outro bem mapeada, como portos ou 
+armazens especificos, então essa questão de planitude ou relevo para gasolina é um calculo feito na pratica já, não há um estudo de terreno de fato... 
+tbm considerando que não há regiões totalmente planas ou viceversa... há preços tabelados..
+
+Agora pelo que eu entendo de "entregas pontuais", aquelas transportadoras que fazem entregas sempre em locais diferente, cada entrega é estudada em distancia, 
+a empresa tem noções de gasto em KM e gastos gerais, em seu dominio de atuação(Seja nacional ou em uma parte do territorio), ou seja, se vem uma entrega de
+joinville a curitiba a empresa já tem uma tabela definida de preço considerando carga e o tempo estipulado entre o cliente-empresa e tudo as condicionais para
+fazer essa entrega ter margem de lucro, é um sistema meio que entendendo todo o conjunto, não há estudo de terreno cada vez q entra uma entrega e no geral as
+transportadoras já usam um preço tabelado com uma boa margem para o lucro nas suas rotas..
+
+SRP não é só para as pastas no codigo..
+eu inicialmente, de maneira ambiciosa e com pouca reflexão macro queria fazer um sistema no JS que considerava tudo,
+estava pensando em depois arrumar uma forma de considerar numeros físicos em estoque(saída/entrada), um sistema de ponto de RH para funcionarios, e muitas outras coisas 
+no projeto... mas ao parar para analisar eu desisti já na premissa, não por falta de vontade ou má fé, mas sim porque não quero tornar meu projeto numa "panaceia"
+há outros aplicativos que seriam melhores para fazer determinadas funcionalidades, não há motivo para fazer um cod que atenda todas as necessidades de uma empresa,
+isso seria ruim até pensando em se der algum problema toda a integridade da empresa seria afetada simultaneamente,
+definir bem a estrutura e responsabilidades de cada software e programa faz parte tanto quanto fazer o sistema... diria ate que o JS talvez não seja o melhor ate para
+o que eu estou fazendo, no fim esse meu projeto é mais academico do que inicialmente eu gostaria de admitir
+[agora conhecendo minha profissão na logistica e tendo que fazer tudo no excel tbm é foda, poderiam investir o minimo para ter um sistema mais robusto
+para calcular e planejar viagens e gastos etc...]
+
+Problemas no npm init 
+Tive um problema ao colocar os arquivos .json no cod, inicialmente n tava "dev": "vite" e eu não estava entendendo ate parar para pesquisar um pouco
+tbm "@supabase/supabase-js": "^2.43.1" // "vite": "^5.2.11", ambos estavam com enderaço errado, tbm deram conflito e me geraram um tempinho de pesquisa para
+arrumar, só quero documentar que foi a primeira vez no projeto que eu de fato parei para pesquisar o que tava havendo e porque não tava dando certo 
+!!!!!!!!!! cabe um estudo sobre configuração de ambiente para não sentir mais essa dificuldade !!!!!!!!
+
+Ironicamente eu parei o projeto para estudar para uma prova de gerencia de Projetos kkkk, então, vou absorver o que der para usar em meus projetos
+
+https://www.academiaplaorc.com.br/wp-content/uploads/2024/07/Guia-PMBOK-7a-Edicao.pdf << estudar a base, n da para pensar em Implementar isso de 
+maneira extensiva num projeto pessoal pequeno, mas ele traz conceitos que dá para usar em qualquer projeto.. 
+
+também é ruim pensar em ficar alternando toda hora  o projeto, por isso a dinamica de levantamento de requisitos e objetivos tem que estar bem traçada 
+ficar alternando muito o projeto pode ser complicado demais em todos os aspectos possiveis, de prazos de entrega, ate mesmo os objetivos iniciais
+Se sair muito da ideia inicial se pode ate avaliar começar um novo, porque se vc tem que ficar alterando as coisas durante o processo, o levantamento 
+pré projeto saiu com alguma coisa errada, mudanças acabam acontecendo eventualmente, por questões como uma nova requisição do cliente(Scope Creep), ou uma adaptação 
+da equipe de desenvolvimento, só se lembra sempre de manter bem a comunicação entre equipe de desenvolvimento, gerencia de projetos, e cliente.. 
+
+???eu tenho facilidade para lidar com conferentes e pessoas que trabalham comigo, será que essa facilidade será sentida nesse novo mercado de trabalho???
+
+Preditiva (Cascata/Waterfall): Tudo é planejado no início. O escopo é fixo e as mudanças são difíceis.
+Adaptativa (Ágil): Planejamento em ciclos curtos (Sprints). É flexível, foca em entregas frequentes e valor para o cliente.
+
+texto que fiz na prova escrita (dia 07/05) redigitado:
+
+Percebi que meu processo de estudo evoluiu ao conectar a teoria de IHC com a prática de desenvolvimento. 
+Sinto-me mais preparado para projetar sistemas que não sejam apenas funcionais, mas também intuitivos e acessíveis. 
+Tive uma experiência real num projeto pessoal onde usei o que se chama de “mobile first” já que a tela do mobile é reduzida o recomendado é manipular os elementos
+ primeiro pensando nisso, que a tela para desktop certamente vai se alinha também.. além de que, na hora de criar o produto ou o software se tem que ter em mente o 
+ público que você pretende atingir, se for uma aplicação para linux por exemplo saindo um pouco do exemplo proposto do exercicio, uma framework  ou sei lá, tu não vai 
+ pensar numa acessibilidade tão ampla, já que seria feito para um publico especifico .. Mas se tratando de um produto comercial a regra é fazer bem intuitivo e com acesso fácil,
+  principais elementos do software já bem mapeados para o uso intuitivo e fácil dos usuários...
+Mas enfim, até mesmo criando framework complexas para Linux com o “QT” por exemplo, ainda sim, sempre se deve pensar na acessibilidade,
+ deixar um layout ou comandos propositalmente bagunçado ou complexo sem necessidade além de contra intuitivo é bem ruim, a não ser que você tenha
+  muito desejo de tornar seu produto de nicho por algum motivo, mas no geral menos complexidade melhor de usar.. resumindo, acessibilidade e o
+   mapeamento intuitivo de elementos são regras fundamentais para o sucesso de qualquer software, independentemente do seu nível de complexidade técnica.. 
+Olha que já vi muita QT de Linux bagunçada, galera que entende da parte técnica pode se perde no designe... faz um menu gigantesco com informações
+ separadas e sem prioridades, coisas irrelevantes no topo e coisa importante escondida no footer, as vezes excesso de customização, monta um frankstain...
+  e sobre a própria complexidade proposital que já falei, as vezes nem é na maldade, o desenvolvedor assume que o usuário "tem que saber", 
+  enfim, a parte técnica é importante, mas todo software é projetado para ser usado, não só para funcionar, ou seja, não se pode deixar de lado a parte do layout. 
+
+
+
+
