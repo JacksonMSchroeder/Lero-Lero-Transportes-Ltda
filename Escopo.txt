@@ -352,4 +352,9 @@ Olha que já vi muita QT de Linux bagunçada, galera que entende da parte técni
 
 
 
-
+AMigo me xingo altos por ter feito projeto em JS e não TS kkkkk, bom, agora ta em TS, claro que fiz agora a migração com ajuda
+é um metodo novo para mim, já parei uma manha toda para estudar tbm, mas apartir de agora é lei fazer os codigos em TS 
+é o certo, evita os erros e falta de segurança do JS..
+Não curti mt, pq se escreve mais cod fazendo em TS, mas é um "mal necessario", mas acho que evita muita dor de cabeça esse sistema de "contratos claros"
+para usar algo tem q definir, isso é bom no fim, uma documentação automatica 
+Na real meu amigo falou e eu particularmente ja senti que não vou quer voltar pro js vanila, o TS é bem completo e não é atoa o padão de mercado.. 

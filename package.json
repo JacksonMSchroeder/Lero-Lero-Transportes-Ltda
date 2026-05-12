@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/JacksonMSchroeder/Lero-Lero-Transportes-Ltda/issues"
   },
-  "homepage": "https://github.com/JacksonMSchroeder/Lero-Lero-Transportes-Ltda#readme"
+  "homepage": "https://github.com/JacksonMSchroeder/Lero-Lero-Transportes-Ltda#readme",
+  "devDependencies": {
+    "@types/node": "^25.7.0",
+    "typescript": "^6.0.3"
+  }
 }
