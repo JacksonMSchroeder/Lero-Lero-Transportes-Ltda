@@ -358,3 +358,18 @@ AMigo me xingo altos por ter feito projeto em JS e não TS kkkkk, bom, agora ta 
 Não curti mt, pq se escreve mais cod fazendo em TS, mas é um "mal necessario", mas acho que evita muita dor de cabeça esse sistema de "contratos claros"
 para usar algo tem q definir, isso é bom no fim, uma documentação automatica 
 Na real meu amigo falou e eu particularmente ja senti que não vou quer voltar pro js vanila, o TS é bem completo e não é atoa o padão de mercado.. 
+
+
+PUTS... um erro de de referência em um import no topo do arquivo me deu um preju de 2 horas num dia, e + 1 hora no outro, não estava achando o erro
+o ERRO era que eu fiz um sistema de 2 tempos, um para fazer calculo local, outro para subir para o supabase, ai quando fui colocar o step2(Subir para o supabase)
+o step 1, calculo local parou de funcionar, eu fiquei mechendo no codigo um monte e tentando entender o porque tava dando o erro no >calculo local< até que
+percebi que se errei quando fui colocar o envio para o supabase o calculo local também morria 
+foda... deixa eu clarificar isso melhor...
+o JavaScript funciona como um disjuntor geral. Quando eu coloco os imports lá no topo do meu app.ts, o navegador tenta montar o mapa completo da minha 
+aplicação antes de dar a partida. Se um desses arquivos está com erro de exportação ou o caminho está errado, é como se desse um curto-circuito logo na entrada:
+o disjuntor cai e nada funciona. Mesmo que o meu cálculo local seja uma lampada independente, o motor do JS trava tudo por segurança e nem chega a ler o meu e.preventDefault().
+por isso, o formulario ignorava meu código, a página recarregava e os dados sumiam na URL.
+No fim das contas, o erro no 'Tempo 2' (Supabase) acabava matando o 'Tempo 1' (Cálculo) porque, 
+para o navegador, se o contrato de importação foi quebrado, o arquivo inteiro é considerado invalido e ele nem tenta rodar o resto...
+Nossa esse erro foi importante para entender isso, apesar de frustante agora to vacinado, e não vou ficar colocando esforços para arrumar a coisa errada mais.. 
+[esse erro aconteceria no JS ou TS]

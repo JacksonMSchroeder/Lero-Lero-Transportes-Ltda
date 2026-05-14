@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lero-Lero Transportes</title>
-  
   <link rel="stylesheet" href="style.css">
   <script type="module" src="/src/app.ts"></script>
 </head>
@@ -18,7 +17,7 @@
       <input type="text" name="cliente" placeholder="Nome do Cliente" required>
 
       <div class="grid">
-        <input type="number" name="valor_bruto" placeholder="Valor Frete (R$)" step="0.01" required>
+        <input type="number" name="valor_bruto" placeholder="Valor Frete (R$)" step="0.15" required>
         <input type="number" name="km_total" placeholder="KM" required>
       </div>
 
@@ -31,19 +30,17 @@
         </select>
       </div>
 
-      <button type="submit">fazer depois calculo em dois tempo, para aparecer na tela, de depois subir para o supabase</button>
+      <button type="submit">Calcular Viagem</button>
     </form>
 
     <div id="res-card" class="hidden">
-      <h4>Resultado:</h4>
+      <h4>Resultado da Operação:</h4>
       <div id="res-content"></div>
     </div>
   </div>
 
   <footer class="footer-legal">
-  <p>Projeto de estudo, não é uma empresa real!</p>
-</footer>
-
- 
+    <p>Projeto de estudo, não é uma empresa real!</p>
+  </footer>
 </body>
 </html>

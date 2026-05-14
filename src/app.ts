@@ -1,57 +1,64 @@
-import type { DadosViagem } from './types';
-import { ConfigDB } from './database/supabase';
+import { tela } from './components/DOM';
+import { calcularResultadoViagem } from './core/engine';
+import { supabase, login, salvarViagem } from './database/supabase';
 
-
-const MULTIPLICADORES: Record<string, number> = { 
-    PLANO: 1.0, 
-    MISTO: 1.2, 
-    SERRA: 1.4 
-};
-
-export const getConsumo = (base: number, terreno: string): number => 
-    base / (MULTIPLICADORES[terreno.toUpperCase()] || 1.0);
-
-export const getImposto = (bruto: number, taxa: number): number => bruto * taxa;
-
-export const getDiesel = (km: number, consumo: number, preco: number): number => 
-    (km / consumo) * preco;
-
-export const getManutencao = (km: number, taxa: number): number => km * taxa;
-
-export const getSeguro = (mercadoria: number): number => mercadoria * 0.01;
-
-export const getComissao = (bruto: number, imposto: number, taxa: number): number => 
-    (bruto - imposto) * taxa;
-
-export const calcularResultadoViagem = (viagem: DadosViagem, config: ConfigDB) => {
-    const consumoReal = getConsumo(config.media_consumo_base, viagem.tipo_terreno);
+tela.form.addEventListener('submit', async (e) => {
+    e.preventDefault(); 
     
-    const custos = {
-        imposto: getImposto(viagem.valor_bruto, config.imposto_simples),
-        diesel: getDiesel(viagem.km_total, consumoReal, config.preco_diesel),
-        manutencao: getManutencao(viagem.km_total, config.manutencao_por_km),
-        seguro: getSeguro(viagem.valor_mercadoria || 0),
-        comissao: 0
-    };
+    console.log("Iniciando cálculo local...");
 
-    custos.comissao = getComissao(
-        viagem.valor_bruto, 
-        custos.imposto, 
-        config.comissao_motorista_percentual
-    );
+    try {
+        
+        const dados = tela.pegarDados();
+        const resultado = calcularResultadoViagem(dados);
+        
+        
+        tela.mostrar(resultado); 
+        console.log("Cálculo local exibido com sucesso.");
 
-    const totalCustos = Object.values(custos).reduce((acc, val) => acc + val, 0);
-    const lucro = viagem.valor_bruto - totalCustos;
+       
+        const btnSupabase = document.getElementById('btn-supabase');
 
-    return {
-        financeiro: {
-            faturamento: viagem.valor_bruto,
-            ...custos,
-            lucro_real: Number(lucro.toFixed(2))
-        },
-        indicadores: {
-            consumo_medio: Number(consumoReal.toFixed(2)),
-            margem: Number(((lucro / viagem.valor_bruto) * 100).toFixed(2))
-        }
-    };
-};
+        
+        const novoBtn = btnSupabase?.cloneNode(true) as HTMLButtonElement;
+        btnSupabase?.parentNode?.replaceChild(novoBtn, btnSupabase!);
+
+        novoBtn?.addEventListener('click', async () => {
+            console.log("Iniciando processo de salvamento...");
+            
+            try {
+                
+                const { data: { session } } = await supabase.auth.getSession();
+
+                if (!session) {
+                    const email = prompt("E-mail do Administrador:");
+                    const senha = prompt("Senha:");
+                    if (email && senha) {
+                        await login(email, senha);
+                    } else {
+                        return;
+                    }
+                }
+
+                novoBtn.innerText = "ENVIANDO...";
+                novoBtn.disabled = true;
+
+                await salvarViagem(dados, resultado);
+
+                novoBtn.innerText = "LANÇADO COM SUCESSO!";
+                novoBtn.style.backgroundColor = "#2e7d32";
+            }  catch (err: any) {
+    console.error("Erro detalhado do Supabase:", err.message, err.details, err.hint);
+    alert(`Erro: ${err.message || "Erro desconhecido"}`);
+                alert("Erro ao enviar para o banco. Verifique o console.");
+                novoBtn.disabled = false;
+                novoBtn.innerText = "TENTAR NOVAMENTE";
+            }
+        });
+
+    } catch (error) {
+        
+        console.error("Erro no Tempo 1 (Cálculo):", error);
+        alert("Erro ao calcular. Verifique se preencheu todos os campos.");
+    }
+});

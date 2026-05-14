@@ -1,29 +1,35 @@
-import { DadosViagem, ResultadoCalculo } from '../types';
+import type { DadosViagem, ResultadoCalculo } from '../types';
 
-export const calcularResultadoViagem = (dados: DadosViagem): ResultadoCalculo => {
- 
-  
- const consumoPorTerreno: Record<'plano' | 'misto' | 'serra', number> = {
-  plano: 3.5,
-  misto: 3.0,
-  serra: 2.2
+const MULTIPLICADORES: Record<string, number> = { PLANO: 1.0, MISTO: 1.2, SERRA: 1.4 };
+
+export const CONFIG_LOCAL = {
+  preco_diesel: 5.85,
+  media_consumo_base: 2.8,
+  imposto_simples: 0.06,
+  comissao_motorista_percentual: 0.12,
+  manutencao_por_km: 0.15
 };
 
-  const consumoMedio = consumoPorTerreno[dados.tipo_terreno];
-  const litrosConsumidos = dados.km_total / consumoMedio;
-  const custoCombustivel = litrosConsumidos * 5.85; 
+export const calcularResultadoViagem = (viagem: DadosViagem): ResultadoCalculo => {
+  const consumoReal = CONFIG_LOCAL.media_consumo_base / (MULTIPLICADORES[viagem.tipo_terreno.toUpperCase()] || 1.0);
+  
+  const imposto = viagem.valor_bruto * CONFIG_LOCAL.imposto_simples;
+  const diesel = (viagem.km_total / consumoReal) * CONFIG_LOCAL.preco_diesel;
+  const manutencao = viagem.km_total * CONFIG_LOCAL.manutencao_por_km;
+  const seguro = (viagem.valor_mercadoria || 0) * 0.15;
+  const comissao = (viagem.valor_bruto - imposto) * CONFIG_LOCAL.comissao_motorista_percentual;
 
-  const lucro = dados.valor_bruto - custoCombustivel;
+  const lucro = viagem.valor_bruto - (imposto + diesel + manutencao + seguro + comissao);
 
   return {
     financeiro: {
-      lucro_real: Number(lucro.toFixed(2)),
-      custo_total: Number(custoCombustivel.toFixed(2))
+      faturamento: viagem.valor_bruto,
+      imposto, diesel, manutencao, seguro, comissao,
+      lucro_real: Number(lucro.toFixed(2))
     },
     indicadores: {
-      margem: Number(((lucro / dados.valor_bruto) * 100).toFixed(2)),
-      percentual_lucro: `${((lucro / dados.valor_bruto) * 100).toFixed(1)}%`,
-      consumo_km_l: consumoMedio
+      consumo_medio: Number(consumoReal.toFixed(2)),
+      margem: Number(((lucro / viagem.valor_bruto) * 100).toFixed(2))
     }
   };
 };
